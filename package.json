@@ -1,0 +1,37 @@
+{
+  "name": "todo-list-app",
+  "version": "1.0.0",
+  "description": "A sample todo list application to illustrate react-model-view-viewmodel usage.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [
+    "todo",
+    "app",
+    "sample",
+    "react",
+    "model",
+    "view",
+    "viewmodel",
+    "mvvm"
+  ],
+  "author": "andrei15193",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^17.0.13",
+    "@types/react-dom": "^17.0.8",
+    "css-loader": "^5.2.6",
+    "html-webpack-plugin": "^5.3.2",
+    "style-loader": "^3.0.0",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
+    "webpack": "^5.42.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}

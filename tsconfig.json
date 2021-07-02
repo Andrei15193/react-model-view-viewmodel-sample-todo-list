@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "jsx": "react",
+        "moduleResolution": "node",
+        "lib": [
+            "ES6",
+            "DOM"
+        ],
+        "strict": true,
+        "alwaysStrict": true,
+        "allowJs": false,
+        "skipLibCheck": true,
+        "esModuleInterop": true
+    },
+    "include": [
+        "./src"
+    ],
+    "exclude": [
+        "./node_modules"
+    ]
+}
