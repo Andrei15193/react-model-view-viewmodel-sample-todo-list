@@ -7,14 +7,14 @@
     "build": "webpack"
   },
   "keywords": [
-    "todo",
-    "app",
-    "sample",
     "react",
-    "model",
+    "sample",
+    "tutorial",
     "view",
+    "model",
+    "mvvm",
     "viewmodel",
-    "mvvm"
+    "model-view-viewmodel"
   ],
   "author": "andrei15193",
   "license": "MIT",
