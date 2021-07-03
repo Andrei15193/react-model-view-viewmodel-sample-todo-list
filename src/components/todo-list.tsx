@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { watchCollection } from "react-model-view-viewmodel";
+import { watchCollection, watchViewModel } from "react-model-view-viewmodel";
 import { ToDoItemState } from "../models/to-do-item-state";
-import { ToDoItem } from "../models/todo-item";
+import { ToDoItemViewModel } from "../view-models/todo-item-view-model";
 import { ToDoListViewModel } from "../view-models/todo-list-view-model";
 import { AddToDoItemForm } from "./add-todo-item-form";
+import { EditToDoItemForm } from "./edit-todo-item-form";
 
 export function ToDoList(): JSX.Element {
+    const [selectedIndex, setSelectedIndex] = useState<number | undefined>(undefined);
     const [showAddForm, setShowAddForm] = useState(false);
 
     const { current: viewModel } = useRef(new ToDoListViewModel());
@@ -13,30 +15,47 @@ export function ToDoList(): JSX.Element {
 
     const showAddFormCallback = useCallback(() => { setShowAddForm(true) }, []);
 
-    const reloadItems = useCallback(() => { setShowAddForm(false); viewModel.load(); }, [viewModel]);
+    const reloadItems = useCallback(() => { setShowAddForm(false); setSelectedIndex(undefined); viewModel.load(); }, [viewModel]);
 
     useEffect(() => { viewModel.load(); }, []);
 
-    return (
-        <>
-            {!showAddForm && <button onClick={showAddFormCallback}>Add</button>}
-            {showAddForm && <AddToDoItemForm onSave={reloadItems} onCancel={reloadItems} />}
-            <div className="todo-list">
-                {viewModel.items.map((item, index) => <ToDoListItem key={index} item={item} />)}
-            </div>
-        </>
-    )
+    if (selectedIndex !== undefined)
+        return (
+            <EditToDoItemForm itemIndex={selectedIndex} onSave={reloadItems} onCancel={reloadItems} />
+        );
+    else
+        return (
+            <>
+                {!showAddForm && <button onClick={showAddFormCallback}>Add</button>}
+                {showAddForm && <AddToDoItemForm onSave={reloadItems} onCancel={reloadItems} />}
+                <div className="todo-list">
+                    {viewModel.items.map((item, index) => <ToDoListItem key={index} item={item} selectItem={() => setSelectedIndex(index)} />)}
+                </div>
+            </>
+        )
 }
 
-export interface IToDoListItemProps {
-    readonly item: ToDoItem;
+interface IToDoListItemProps {
+    readonly item: ToDoItemViewModel;
+
+    selectItem(): void;
 }
 
-function ToDoListItem({ item }: IToDoListItemProps): JSX.Element {
+function ToDoListItem({ item, selectItem }: IToDoListItemProps): JSX.Element {
+    const progressCallback = useCallback(() => item.progress(), [item]);
+
+    watchViewModel(item);
+
     return (
         <div className="todo-list-item">
-            {item.description}
-            <ToDoListItemState state={item.state} />
+            <div className="todo-list-item-content">
+                {item.description}
+                <ToDoListItemState state={item.state} />
+            </div>
+            <div className="todo-list-item-actions">
+                <button onClick={selectItem}>Edit</button>
+                <button onClick={progressCallback} disabled={!item.canProgress}>{">"}</button>
+            </div>
         </div>
     );
 }

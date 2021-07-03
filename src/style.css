@@ -40,8 +40,18 @@ body > div#app > div.todo-list-app-content div.todo-list {
 }
 
 body > div#app > div.todo-list-app-content div.todo-list-item {
+    display: flex;
+    flex-direction: row;
     padding: 3px;
     font-size: 12pt;
+}
+
+body > div#app > div.todo-list-app-content div.todo-list-item div.todo-list-item-content {
+    flex: 1 1 auto;
+}
+
+body > div#app > div.todo-list-app-content div.todo-list-item div.todo-list-item-actions {
+    align-self: center;
 }
 
 body > div#app > div.todo-list-app-content div.todo-list-item div.todo-list-item-state-todo {
