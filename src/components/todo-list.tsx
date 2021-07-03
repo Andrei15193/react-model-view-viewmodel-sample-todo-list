@@ -21,7 +21,7 @@ export function ToDoList(): JSX.Element {
 
     if (selectedIndex !== undefined)
         return (
-            <EditToDoItemForm itemIndex={selectedIndex} onSave={reloadItems} onCancel={reloadItems} />
+            <EditToDoItemForm itemIndex={selectedIndex} onSave={reloadItems} onDelete={reloadItems} onCancel={reloadItems} />
         );
     else
         return (
