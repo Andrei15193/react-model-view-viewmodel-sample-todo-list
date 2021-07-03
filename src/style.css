@@ -1,3 +1,66 @@
-h1 {
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+body > div#app {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    margin: 10px auto;
+    border: 1px solid grey;
+    border-radius: 30px;
+    padding: 10px 0 20px;
+    width: 400px;
+    overflow: hidden;
+}
+
+body > div#app h1 {
+    margin: 0 0 20px;
+    text-align: center;
     text-decoration: underline;
+}
+
+body > div#app > div.todo-list-app-content {
+    flex: 1 1 auto;
+    overflow: auto;
+    padding: 0 10px;
+}
+
+body > div#app > div.todo-list-app-content div.todo-list {
+    margin-top: 5px;
+}
+
+body > div#app > div.todo-list-app-content div.todo-list-item {
+    padding: 3px;
+    font-size: 12pt;
+}
+
+body > div#app > div.todo-list-app-content div.todo-list-item div.todo-list-item-state-todo {
+    font-size: 10pt;
+    color: darkcyan;
+}
+
+body > div#app > div.todo-list-app-content div.todo-list-item div.todo-list-item-state-in-progress {
+    font-size: 10pt;
+    color: green;
+}
+
+body > div#app > div.todo-list-app-content div.todo-list-item div.todo-list-item-state-done {
+    font-size: 10pt;
+    color: darkblue;
+}
+
+body > div#app > div.todo-list-app-content div.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
 }
