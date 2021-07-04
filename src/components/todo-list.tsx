@@ -1,5 +1,6 @@
+import type { ChangeEventHandler } from "react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { watchCollection, watchViewModel } from "react-model-view-viewmodel";
+import { useViewModelType, watchCollection, watchViewModel } from "react-model-view-viewmodel";
 import { ToDoItemState } from "../models/to-do-item-state";
 import { ToDoItemViewModel } from "../view-models/todo-item-view-model";
 import { ToDoListViewModel } from "../view-models/todo-list-view-model";
@@ -10,12 +11,17 @@ export function ToDoList(): JSX.Element {
     const [selectedIndex, setSelectedIndex] = useState<number | undefined>(undefined);
     const [showAddForm, setShowAddForm] = useState(false);
 
-    const { current: viewModel } = useRef(new ToDoListViewModel());
+    const viewModel = useViewModelType(ToDoListViewModel);
     watchCollection(viewModel.items);
 
     const showAddFormCallback = useCallback(() => { setShowAddForm(true) }, []);
 
     const reloadItems = useCallback(() => { setShowAddForm(false); setSelectedIndex(undefined); viewModel.load(); }, [viewModel]);
+
+    const filterChangedCallback: ChangeEventHandler<HTMLInputElement> = useCallback(
+        event => { viewModel.filter = event.target.value; },
+        [viewModel]
+    );
 
     useEffect(() => { viewModel.load(); }, []);
 
@@ -26,13 +32,16 @@ export function ToDoList(): JSX.Element {
     else
         return (
             <>
+                <div className="form-group">
+                    <input value={viewModel.filter} onChange={filterChangedCallback} />
+                </div>
                 {!showAddForm && <button onClick={showAddFormCallback}>Add</button>}
                 {showAddForm && <AddToDoItemForm onSave={reloadItems} onCancel={reloadItems} />}
                 <div className="todo-list">
                     {viewModel.items.map((item, index) => <ToDoListItem key={index} item={item} selectItem={() => setSelectedIndex(index)} />)}
                 </div>
             </>
-        )
+        );
 }
 
 interface IToDoListItemProps {
