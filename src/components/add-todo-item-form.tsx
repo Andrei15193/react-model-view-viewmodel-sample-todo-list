@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from "react";
-import { watchEvent } from "react-model-view-viewmodel";
+import { watchEvent, watchViewModel } from "react-model-view-viewmodel";
 import { AddToDoItemViewModel } from "../view-models/add-todo-item-view-model";
 import { ToDoItemForm } from "./todo-item-form";
 
@@ -14,13 +14,15 @@ export function AddToDoItemForm({ onSave, onCancel }: IAddToDoItemFormProps): JS
     const addCallback = useCallback(() => { viewModel.save(); }, []);
     const cancelCallback = useCallback(() => { onCancel && onCancel(); }, []);
 
-    watchEvent(viewModel.saved, () => { onSave && onSave(); })
+    watchEvent(viewModel.saved, () => { onSave && onSave(); });
+
+    watchViewModel(viewModel.form);
 
     return (
         <>
             <ToDoItemForm form={viewModel.form} />
             <div>
-                <button onClick={addCallback}>Add</button>
+                <button onClick={addCallback} disabled={viewModel.form.isInvalid}>Add</button>
                 <button onClick={cancelCallback}>Cancel</button>
             </div>
         </>

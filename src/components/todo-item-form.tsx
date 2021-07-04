@@ -27,6 +27,7 @@ export function ToDoItemForm({ form }: IToDoItemFormProps): JSX.Element {
             <div className="form-group">
                 <label htmlFor={form.description.name}>{form.description.name}</label>
                 <input id={form.description.name} name={form.description.name} value={form.description.value} onChange={descriptionChangedCallback} />
+                {form.description.isInvalid && <div>{form.description.error}</div>}
             </div>
             <div className="form-group">
                 <label htmlFor={form.state.name}>{form.state.name}</label>
@@ -35,6 +36,7 @@ export function ToDoItemForm({ form }: IToDoItemFormProps): JSX.Element {
                     <option value={ToDoItemState.InProgress}>Doing</option>
                     <option value={ToDoItemState.Done}>Done</option>
                 </select>
+                {form.state.isInvalid && <div>{form.state.error}</div>}
             </div>
         </div>
     );

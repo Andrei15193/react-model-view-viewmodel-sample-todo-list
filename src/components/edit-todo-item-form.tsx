@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { watchEvent } from "react-model-view-viewmodel";
+import { watchEvent, watchViewModel } from "react-model-view-viewmodel";
 import { EditToDoItemViewModel } from "../view-models/edit-todo-item-view-model";
 import { ToDoItemForm } from "./todo-item-form";
 
@@ -21,8 +21,10 @@ export function EditToDoItemForm({ itemIndex, onSave, onDelete, onCancel }: IEdi
     const showDeleteConfirmationCallback = useCallback(() => setShowDeleteConfirmation(true), []);
     const hideDeleteConfirmationCallback = useCallback(() => setShowDeleteConfirmation(false), []);
 
-    watchEvent(viewModel.saved, () => { onSave && onSave(); })
-    watchEvent(viewModel.deleted, () => { onDelete && onDelete(); })
+    watchEvent(viewModel.saved, () => { onSave && onSave(); });
+    watchEvent(viewModel.deleted, () => { onDelete && onDelete(); });
+
+    watchViewModel(viewModel.form);
 
     useEffect(() => { viewModel.load(itemIndex) }, [itemIndex]);
 
@@ -31,7 +33,7 @@ export function EditToDoItemForm({ itemIndex, onSave, onDelete, onCancel }: IEdi
             <ToDoItemForm form={viewModel.form} />
             {
                 !showDeleteConfirmation && <div>
-                    <button onClick={editCallback}>Edit</button>
+                    <button onClick={editCallback} disabled={viewModel.form.isInvalid}>Edit</button>
                     <button onClick={cancelCallback}>Cancel</button>
                     <button onClick={showDeleteConfirmationCallback}>Delete</button>
                 </div>
