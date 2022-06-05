@@ -1,12 +1,12 @@
 import type { IObservableCollection, IReadOnlyObservableCollection } from "react-model-view-viewmodel";
-import { observableCollection, ViewModel } from "react-model-view-viewmodel";
+import { ObservableCollection, ViewModel } from "react-model-view-viewmodel";
 import { ToDoItem } from "../models/todo-item";
 import { ToDoItemViewModel } from "./todo-item-view-model";
 
 export class ToDoListViewModel extends ViewModel {
     private _allItems: readonly ToDoItemViewModel[] = [];
     private _filter: string = "";
-    private readonly _items: IObservableCollection<ToDoItemViewModel> = observableCollection<ToDoItemViewModel>();
+    private readonly _items: IObservableCollection<ToDoItemViewModel> = new ObservableCollection<ToDoItemViewModel>();
 
     public get items(): IReadOnlyObservableCollection<ToDoItemViewModel> {
         return this._items;
